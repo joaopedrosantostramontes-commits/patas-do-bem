@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Campaign } from "@/types";
 import { formatCurrency, calculateProgress } from "@/lib/utils";
-import { X, Heart, MapPin, Calendar, AlertTriangle, ShieldCheck, Check } from "lucide-react";
+import { X, Heart, MapPin, Calendar, ShieldCheck, ExternalLink } from "lucide-react";
+import { ALLOWED_DONATION_AMOUNTS, AllowedDonationAmount, getSunizeCheckoutUrl } from "@/lib/sunize";
 
 interface CampaignModalProps {
   campaign: Campaign | null;
@@ -12,8 +13,7 @@ interface CampaignModalProps {
 }
 
 export default function CampaignModal({ campaign, onClose }: CampaignModalProps) {
-  const [selectedAmount, setSelectedAmount] = useState<number>(20);
-  const [simulationState, setSimulationState] = useState<"idle" | "simulated">("idle");
+  const [selectedAmount, setSelectedAmount] = useState<AllowedDonationAmount>(20);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -35,10 +35,7 @@ export default function CampaignModal({ campaign, onClose }: CampaignModalProps)
 
   const progress = calculateProgress(campaign.raisedAmount, campaign.targetAmount);
   const remaining = Math.max(0, campaign.targetAmount - campaign.raisedAmount);
-
-  const handleSimulateDonation = () => {
-    setSimulationState("simulated");
-  };
+  const checkoutUrl = getSunizeCheckoutUrl(selectedAmount) || "";
 
   return (
     <div
@@ -177,69 +174,59 @@ export default function CampaignModal({ campaign, onClose }: CampaignModalProps)
             </div>
           )}
 
-          {/* Demonstrative Donation Simulation Section */}
-          <div className="space-y-4 pt-4 border-t border-[#eedece] bg-[#fef5e9] p-5 rounded-2xl border border-[#F39A24]/30">
+          {/* Sunize Checkout Donation Section */}
+          <div className="space-y-4 pt-4 border-t border-[#eedece] bg-[#fef5e9] p-5 sm:p-6 rounded-2xl border border-[#F39A24]/30">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-[#F39A24] shrink-0 mt-0.5" />
+              <Heart className="w-5 h-5 text-[#F39A24] fill-[#F39A24] shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-sm font-bold text-[#3e2417]">
-                  Simulação de Doação (Ambiente de Demonstração)
+                <h4 className="text-sm sm:text-base font-bold text-[#3e2417]">
+                  Apoiar esta Campanha
                 </h4>
-                <p className="text-xs text-[#5A3825] mt-1">
-                  Nenhum pagamento real está habilitado nesta etapa. Use os botões abaixo apenas para testar a experiência visual.
+                <p className="text-xs text-[#5A3825] mt-1 leading-relaxed">
+                  Escolha um dos valores abaixo para contribuir diretamente com o tratamento de {campaign.animalName}. O pagamento é processado com total segurança no checkout da Sunize via PIX ou cartão.
                 </p>
               </div>
             </div>
 
-            {simulationState === "simulated" ? (
-              <div className="p-4 bg-[#eaf4ee] border border-[#237A45]/40 rounded-xl text-[#1b5f36] space-y-2 animate-in fade-in">
-                <div className="flex items-center gap-2 font-bold text-sm">
-                  <Check className="w-5 h-5 text-[#237A45]" />
-                  <span>Simulação visual concluída com sucesso!</span>
-                </div>
-                <p className="text-xs leading-relaxed text-[#5A3825]">
-                  Você simulou uma doação demonstrativa de <strong>{formatCurrency(selectedAmount)}</strong> para {campaign.animalName}.
-                  Nenhuma cobrança ou chave PIX foi gerada. A integração com o gateway de pagamentos será realizada em etapas futuras após a homologação das contas.
-                </p>
-                <button
-                  onClick={() => setSimulationState("idle")}
-                  className="text-xs font-semibold underline text-[#237A45] hover:text-[#1b5f36] cursor-pointer pt-1"
-                >
-                  Voltar para simular outro valor
-                </button>
+            <div className="space-y-3">
+              <label className="block text-xs font-bold text-[#3e2417]">
+                Selecione o valor da sua contribuição:
+              </label>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                {ALLOWED_DONATION_AMOUNTS.map((amount) => (
+                  <button
+                    key={amount}
+                    type="button"
+                    onClick={() => setSelectedAmount(amount)}
+                    aria-pressed={selectedAmount === amount}
+                    className={`py-2 px-2.5 text-xs sm:text-sm font-bold rounded-xl border transition-all cursor-pointer ${
+                      selectedAmount === amount
+                        ? "bg-[#F39A24] text-white border-[#F39A24] shadow-sm"
+                        : "bg-white text-[#5A3825] border-[#eedece] hover:border-[#F39A24]/60 hover:bg-[#FFF9F0]"
+                    }`}
+                  >
+                    {formatCurrency(amount, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                  </button>
+                ))}
               </div>
-            ) : (
-              <div className="space-y-3">
-                <label className="block text-xs font-bold text-[#3e2417]">
-                  Selecione um valor demonstrativo:
-                </label>
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                  {[10, 15, 20, 25, 30, 50].map((amount) => (
-                    <button
-                      key={amount}
-                      type="button"
-                      onClick={() => setSelectedAmount(amount)}
-                      className={`py-2 px-2.5 text-xs sm:text-sm font-bold rounded-xl border transition-all cursor-pointer ${
-                        selectedAmount === amount
-                          ? "bg-[#F39A24] text-white border-[#F39A24] shadow-sm"
-                          : "bg-white text-[#5A3825] border-[#eedece] hover:border-[#F39A24]/60 hover:bg-[#FFF9F0]"
-                      }`}
-                    >
-                      {formatCurrency(amount, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                    </button>
-                  ))}
-                </div>
 
-                <button
-                  type="button"
-                  onClick={handleSimulateDonation}
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#F39A24] hover:bg-[#e08915] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F39A24]"
-                >
-                  <Heart className="w-4 h-4 fill-white" />
-                  <span>Simular Apoio de {formatCurrency(selectedAmount)}</span>
-                </button>
+              <a
+                href={checkoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 px-4 rounded-xl bg-[#237A45] hover:bg-[#1b5f36] active:bg-[#164d2c] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#237A45]"
+                aria-label={`Apoiar ${campaign.animalName} com doação de ${formatCurrency(selectedAmount)} no checkout Sunize`}
+              >
+                <Heart className="w-4 h-4 fill-white" />
+                <span>Apoiar com {formatCurrency(selectedAmount)}</span>
+                <ExternalLink className="w-4 h-4 ml-1 opacity-90" />
+              </a>
+
+              <div className="flex items-center justify-center gap-2 pt-1 text-[11px] text-[#5A3825]/80 text-center">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#237A45] shrink-0" />
+                <span>Checkout 100% seguro processado pela Sunize • Redirecionamento direto</span>
               </div>
-            )}
+            </div>
           </div>
 
         </div>
