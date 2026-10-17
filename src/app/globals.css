@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FFF9F0;
+  --foreground: #5A3825;
+  --brand-green: #237A45;
+  --brand-green-hover: #1b5f36;
+  --brand-green-light: #eaf4ee;
+  --brand-orange: #F39A24;
+  --brand-orange-hover: #dc8416;
+  --brand-orange-light: #fef5e9;
+  --brand-cream: #FFF9F0;
+  --brand-cream-dark: #f5ece0;
+  --brand-brown: #5A3825;
+  --brand-brown-light: #7a543e;
+  --brand-brown-dark: #3f2518;
+}
+
+@theme {
+  --color-brand-green: #237A45;
+  --color-brand-green-hover: #1b5f36;
+  --color-brand-green-light: #eaf4ee;
+  --color-brand-orange: #F39A24;
+  --color-brand-orange-hover: #dc8416;
+  --color-brand-orange-light: #fef5e9;
+  --color-brand-cream: #FFF9F0;
+  --color-brand-cream-dark: #f5ece0;
+  --color-brand-brown: #5A3825;
+  --color-brand-brown-light: #7a543e;
+  --color-brand-brown-dark: #3f2518;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom subtle scrollbar in brand colors */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF9F0;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8c8b6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #237A45;
+}
+

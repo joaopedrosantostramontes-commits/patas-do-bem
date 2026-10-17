@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Heart background wrapper -->
+  <rect width="64" height="64" rx="16" fill="#FFF9F0" />
+  
+  <!-- Outer Heart Arc in Brand Green -->
+  <path d="M32 54C32 54 10 39 10 24C10 14 18 8 27 10C29.5 10.5 32 12.5 32 12.5C32 12.5 34.5 10.5 37 10C46 8 54 14 54 24C54 39 32 54 32 54Z" 
+        stroke="#237A45" stroke-width="4.5" stroke-linejoin="round" fill="none" />
+
+  <!-- Dog Silhouette in Brand Orange -->
+  <path d="M19 28C19 20 25 15 32 15C36 15 39 18 39 22C39 27 34 32 30 35C24 39 19 36 19 28Z" 
+        fill="#F39A24" />
+
+  <!-- Cat Silhouette in Brand Brown -->
+  <path d="M34 35C33 29 37 24 43 24C46 24 48 26 48 30C48 35 44 40 39 42C36 43 34 39 34 35Z" 
+        fill="#5A3825" />
+
+  <!-- Central Paw in Brand Green -->
+  <g fill="#237A45">
+    <ellipse cx="32" cy="45" rx="5" ry="4" />
+    <circle cx="25" cy="40" r="2.2" />
+    <circle cx="30" cy="37" r="2.2" />
+    <circle cx="34" cy="37" r="2.2" />
+    <circle cx="39" cy="40" r="2.2" />
+  </g>
+</svg>
