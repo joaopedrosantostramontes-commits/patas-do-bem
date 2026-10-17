@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import DemoBanner from "@/components/DemoBanner";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ImpactMetrics from "@/components/ImpactMetrics";
@@ -26,10 +25,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] selection:bg-amber-200 selection:text-amber-950">
-      {/* 1. Fixed / Top Demonstration Notice Banner */}
-      <DemoBanner />
-
-      {/* 2. Responsive Header with Navigation */}
+      {/* 1. Responsive Header with Navigation */}
       <Header onOpenOnboarding={handleOpenOnboarding} />
 
       {/* 3. Main Landing Page Sections */}

@@ -1,14 +1,5 @@
 import { Campaign, Metric, FaqItem } from "@/types";
 
-export const DEMO_NOTICE = {
-  isDemoEnvironment: true,
-  badgeText: "Ambiente de Demonstração — Patas do Bem",
-  disclaimer:
-    "Todos os dados, nomes, valores e campanhas exibidos nesta página são fictícios e destinados exclusivamente à validação de interface e experiência de usuário no Patas do Bem.",
-  paymentsDisabledMessage:
-    "O módulo de pagamentos está desativado nesta etapa. Nenhuma transação financeira real pode ser realizada.",
-};
-
 export const MOCK_METRICS: Metric[] = [
   {
     label: "Vidas amparadas",

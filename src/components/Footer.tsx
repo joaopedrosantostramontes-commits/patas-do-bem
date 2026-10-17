@@ -106,10 +106,8 @@ export default function Footer() {
           <p>
             © 2026 Patas do Bem. Todos os direitos reservados.
           </p>
-          <div className="flex items-center gap-2 text-[#F39A24] font-medium">
-            <span>Ambiente de Demonstração</span>
-            <span>•</span>
-            <span>Sem pagamentos reais ativos</span>
+          <div className="flex items-center gap-2 text-[#d4c1b0]">
+            <span>Amor, cuidado e transparência na proteção animal</span>
           </div>
         </div>
 

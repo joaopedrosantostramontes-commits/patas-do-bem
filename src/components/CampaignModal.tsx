@@ -59,7 +59,7 @@ export default function CampaignModal({ campaign, onClose }: CampaignModalProps)
               {campaign.categoryLabel}
             </span>
             <span className="text-xs text-[#5A3825]/70 font-medium">
-              ID: {campaign.id} (Fictício)
+              ID: {campaign.id}
             </span>
           </div>
 
